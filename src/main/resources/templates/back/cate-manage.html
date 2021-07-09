@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新闻分类</title>
+    <script th:src="@{/js/jquery/jquery-2.1.4.min.js}" type="text/javascript"></script>
+    <script th:src="@{/layui/layui.js}" type="text/javascript"></script>
+    <!--    <script th:src="@{/layui/lay/modules/layer.js}" type="text/javascript"></script>-->
+
+    <!--    <script th:src="@{/layui/lay/modules/form.js}" type="text/javascript"></script>-->
+    <!--    <script src="/xadmin/js/xadmin.js" type="text/javascript"></script>-->
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <link rel="stylesheet" th:href="@{/xadmin/css/xadmin.css}"/>
+    <link rel="stylesheet" th:href="@{/layui/css/modules/layer/default/layer.css}"/>
+
+    <style type="text/css">
+        .layui-table{
+            text-align: center;
+        }
+        .layui-table th{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="x-nav">
+      <span >
+        <a href="">首页&nbsp&nbsp  /</a>
+        <a href="/back/cate">&nbsp&nbsp分类列表</a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="/back/cate"
+       title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+<div style="padding-top:20px;padding-right:25px;padding-bottom: 20px;padding-left: 25px">
+    <div style="display: block;background-color: #bebebe;padding: 5px">
+        <button id="addCate" class="layui-btn layui-btn-normal" type="button"><i class="layui-icon">&#xe654;</i>添加
+        </button>
+        <span style="line-height:40px;padding-left:10px">共有数据：[[${count}]] 条</span>
+    </div>
+
+    <table class="layui-table" style="padding-left: 10px;padding-right: 10px">
+        <thead>
+        <th>序号</th>
+        <th>分类名</th>
+        <th>操作</th>
+        </thead>
+        <tbody>
+        <tr th:each="cate,state:${cates}">
+            <td th:text="${state.count}">序号</td>
+            <td th:text="${cate.cname}">名字</td>
+            <td>
+                <a title="编辑" id="updateEdit" href="#" th:onclick="cate_update(this,[[${cate.cid}]],[[${cate.cname}]])">
+                    <i class="layui-icon">&#xe642;</i>
+                </a>
+                <a title="删除" th:onclick="cate_del(this,[[${cate.cid}]])" href="javascript:;">
+                    <i class="layui-icon">&#xe640;</i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--    添加分类按钮，不显示，调用时显示-->
+<div class="layui-row" id="addnone" style="display: none;">
+    <div class="layui-col-md8">
+        <form class="layui-form" id="cateForm">
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="cname" required lay-verity="#" class="layui-input"
+                           placeholder="请输入新的分类名称">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn " lay-filter="formDemo" lay-submit>添加</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--    修改分类按钮，不显示，调用时显示-->
+<div class="layui-row" id="updatenone" style="display: none;">
+    <div class="layui-col-md8">
+        <form class="layui-form" id="cateUpdateForm">
+            <input type="hidden" name="cid" id="update_cid" value="" >
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="cname" class="layui-input" id="update_cname" value=""
+                           required lay-verity="#"  placeholder="请输入新的分类名称">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn " lay-filter="update" lay-submit>修改</button>
+<!--                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    layui.use(['jquery', 'form', 'layer'], function () {
+
+        var form = layui.form
+            , layer = layui.layer
+            , $ = layui.jquery;
+
+        /*添加弹出框*/
+        $("#addCate").click(function () {
+            layer.open({
+                type: 1,
+                title: "添加分类",
+                area: ["50%"],
+                anim: 2,
+                content: $("#addnone").html()
+            });
+            // $("#cateForm")[0].reset();
+            form.on('submit(formDemo)', function (data) {
+                var param = data.field;
+                $.ajax({
+                    url: '/back/cateadd',
+                    type: "post",
+                    data: JSON.stringify(param),
+                    // dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.code == 200) {
+                            layer.msg('添加成功', {icon: 1, time: 3000});
+                            // console.log("success");
+                            setTimeout(function () {window.location.href = '/back/cate';}, 2000);
+                        }
+                        if (data.code == 410){
+                            layer.msg('该分类已存在，请重新输入',{icon:0,time: 2000});
+                        }
+
+                    }
+                });
+                // return false;
+            });
+        });
+
+        //修改表格提交
+        form.on('submit(update)', function (data) {
+            var param = data.field;
+            $.ajax({
+                url: '/back/cate_update',
+                type: "post",
+                data: JSON.stringify(param),
+                // dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.flag == true) {
+                        layer.msg('修改成功', {icon: 1, time: 3000});
+                        // console.log("success");
+                        setTimeout(function () {window.location.href = '/back/cate';}, 2000);
+                    }else {
+                        layer.msg('该分类已存在，请重新输入',{icon:0,time: 2000});
+                    }
+                    // if (data.code == 410){
+                    //     layer.msg('该分类已存在，请重新输入',{icon:0,time: 2000});
+                    // }
+
+                }
+            });
+            // return false;
+        });
+    });
+
+
+    /*删除弹出框*/
+    function cate_del(obj,cid){
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            $.get("/back/cate/delete",{"cid":cid},function (data) {
+
+                console.log(data);
+                if(data =='true'){
+                    layer.msg('删除成功!',{icon:1,time:2000});
+                    setTimeout(function () {window.location.href='/back/cate';},2000);
+
+                }else {
+                    layer.msg('该分类存在数据，故删除失败!',{icon:0,time:2000});
+                    // setTimeout(function () {window.location.href='/back/cate';},2000);
+                }
+            });
+        });
+    }
+    //修改弹出框
+    function cate_update(obj,cid,cname){
+        // 这种写法有时会失效,特别是他的父元素是dosplay:none时
+        // $("#update_cid").val(cid);
+        // $("#update_cname").val(cname);
+        // 下面写法可正常复制，上面有时候失效
+        $("#update_cname").attr("value",cname);
+        $("#update_cid").attr("value",cid);
+        // console.log(cid+":"+cname);
+        layer.open({
+            type: 1,
+            title: "修改分类",
+            area: ["50%"],
+            anim: 2,
+            content: $("#updatenone").html()
+        });
+
+    }
+
+
+</script>
+</body>
+</html>

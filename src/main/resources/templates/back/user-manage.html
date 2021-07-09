@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理列表</title>
+    <script th:src="@{/js/jquery/jquery-2.1.4.min.js}" type="text/javascript"></script>
+    <script th:src="@{/layui/layui.js}" type="text/javascript"></script>
+<!--    <script th:src="@{/layui_exts/excel.js}" type="text/javascript"></script>-->
+    <script type="text/javascript" src="/xadmin/js/xadmin.js"></script>
+
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <link rel="stylesheet" th:href="@{/xadmin/css/xadmin.css}"/>
+    <link rel="stylesheet" th:href="@{/layui/css/modules/layer/default/layer.css}"/>
+
+    <style type="text/css">
+        .layui-table {
+            text-align: center;
+        }
+
+        .layui-table th {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="x-nav">
+      <span>
+        <a href="">首页&nbsp&nbsp  /</a>
+        <a href="/back/user/manage">&nbsp&nbsp用户管理列表</a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="/back/user/manage"
+       title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+
+
+<div class="x-body">
+<!--    查询条件-->
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" action="/back/user/manage">
+
+            <div class="layui-inline" style="padding-left: 10px;">
+                <label class="layui-form-label">用户账号:</label>
+                <input class="layui-input" placeholder="请输入查询的用户账号" name="uname">
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">用户等级:</label>
+                <div class="layui-input-block">
+                    <select name="lid">
+                        <!--     selected        不选择为0默认查询所有等级-->
+                        <option value="" >请选择用户等级</option>
+                        <option value="1" >1</option>
+                        <option th:if="${session.back_user.lid} eq '3'" value="2">2</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">激活状态:</label>
+                <div class="layui-input-block">
+                    <select name="active">
+                        <option value="">请选择用户状态</option>
+                        <option value="1">激活</option>
+                        <option value="0">未激活</option>
+                    </select>
+                </div>
+            </div>
+            <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+    </div>
+
+    <xblock>
+        <button class="layui-btn layui-btn-normal" onclick="x_admin_show('添加新用户','/back/user/addUser',500,500)">
+            <i class="layui-icon">&#xe654;</i>添加 </button>
+        <button th:if="${session.back_user.lid==3}" class="layui-btn layui-btn-warm" lay-filter="toolbarDemo" lay-submit=""><i class="layui-icon">&#xe67c;</i>导出</button>
+    </xblock>
+
+    <!--    数据表格-->
+    <table class="layui-table">
+        <thead>
+        <th>序号</th>
+        <th>用户账号</th>
+        <th>用户昵称</th>
+        <th>用户等级</th>
+        <th>电话</th>
+        <th>邮箱</th>
+        <th>激活状态</th>
+        <th>创建日期</th>
+        <th th:if="${session.back_user.lid} eq '3'">操作</th>
+        </thead>
+
+        <tbody>
+        <tr th:each="users,stat:${userIPage.records}">
+            <td th:text="${stat.count}">序号</td>
+            <td th:text="${users.uname}">用户账号</td>
+            <td th:text="${users.newsName}">用户昵称</td>
+            <td th:text="${users.lid}">用户等级</td>
+            <td th:text="${users.telephone}">电话</td>
+            <td th:text="${users.email}">邮箱</td>
+            <td th:text="${users.active==0?'未激活':'激活'}">激活状态</td>
+            <td th:text="${#dates.format(users.createTime, 'yyyy-MM-dd HH:mm')}">创建日期</td>
+            <td th:if="${session.back_user.lid} eq '3'">
+                <a class="layui-btn layui-btn-xs" th:onclick="x_admin_show('用户编辑','/back/user/editUser?uid=[[${users.uid}]]',500,525)">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" th:onclick="del(this,[[${users.uid}]])">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--分页,默认第一页开始，一页20条数据-->
+    <div id="pages">
+        <div class="layui-box layui-laypage layui-laypage-default">
+            <a  th:href="@{/back/user/manage(pn=${userIPage.current}-1)}"
+                th:class="${userIPage.current==1?'layui-laypage-prev layui-disabled':''}" >上一页</a>
+
+            <span th:class="layui-laypage-curr" th:if="${pages} eq '1'">
+                <em class="layui-laypage-em"></em><em>1</em>
+            </span>
+
+            <span th:if="${pages} gt '1'" th:class="${num==userIPage.current?'layui-laypage-curr':''}"
+                  th:each="num:${#numbers.sequence(1,userIPage.pages)}">
+                <a th:href="@{/back/user/manage(pn=${num})}"><em class="layui-laypage-em"></em><em>[[${num}]]</em></a>
+            </span>
+
+            <a th:href="@{/back/user/manage(pn=${userIPage.current}+1)}"
+               th:class="${userIPage.current==userIPage.getPages()?'layui-laypage-next layui-disabled':''}">下一页</a>
+
+            <span class="layui-laypage-count">当前第 [[${userIPage.current}]] 页，总计 [[${userIPage.pages}]] 页,
+                共 [[${userIPage.total}]] 条记录</span>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    // layui.config({
+    //     base: '../../layui_exts/',
+    // }).extend({
+    //     excel: 'excel',
+    // });
+
+    //需要在lay/modules中加入excel.js，在layui.js中声明  excel:"modules/excel",
+    //导出excel操作
+    layui.use(['jquery', 'excel','form','layer','laydate'], function(){
+        var form = layui.form,
+            $ = layui.jquery,
+            laydate = layui.laydate;
+        var excel = layui.excel;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+
+        form.on('submit(toolbarDemo)', function(){
+
+            $.ajax({
+                url: '/back/user/exportUserData',
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    console.log(data);
+
+                    // 1. 如果需要调整顺序，请执行梳理函数
+                    var dt = excel.filterExportData(data, [
+                        'uid'
+                        ,'uname'
+                        ,'newsName'
+                        ,'telephone'
+                        ,'email'
+                        ,'sex'
+                        ,'lid'
+                        ,'createTime'
+                    ]);
+
+                    // 2. 数组头部新增表头
+                    dt.unshift({uid: 'ID', uname: '用户账号', newsName: '用户昵称', telephone: '用户电话',email: '用户邮箱',
+                        sex: '用户性别',lid: '用户等级',createTime: '账号创建时间'});
+
+                    // 意思是：A列40px，B列60px(默认)，C列120px，D、E、F等均未定义
+                    var colConf = excel.makeColConfig({
+                        'C': 90,
+                        'D': 80
+                    }, 60);
+
+                    var timestart = Date.now();
+                    // 3. 执行导出函数，系统会弹出弹框
+                    excel.exportExcel({
+                        sheet1: dt
+                    }, '用户数据.xlsx', 'xlsx', {
+                        extend: {
+                            '!cols': colConf
+                        }
+                    });
+                    var timeend = Date.now();
+
+                    var spent = (timeend - timestart) / 1000;
+                    layer.alert('导出耗时 '+spent+' s');
+                    //setTimeout(function () {window.location.href='/findAdmin';},2000);
+                },
+
+                error: function () {
+                    //console.log(data);
+                    layer.msg("出现错误，请稍后再试");
+                    // setTimeout(function () {window.location.href='/findClass';},2000);
+                }
+            });
+        });
+
+    });
+
+
+    //用户删除
+    function del(obj,uid){
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            $.post("/back/user/deleteUser",{"uid":uid},function (data) {
+                if(data =='success'){
+                    layer.msg('删除成功!',{icon:1,time:2000});
+                    setTimeout(function () {window.location.href='/back/user/manage';},2000);
+
+                }else {
+                    layer.msg('删除失败!',{icon:0,time:2000});
+                    setTimeout(function () {window.location.href='/back/user/manage';},2000);
+                }
+            });
+        });
+    }
+
+    // function permit(obj, id) {
+    //     $.post("/back/article/permit", {"id": id}, function (data) {
+    //         console.log(data);
+    //         // var flag=data
+    //         if (data == 'true') {
+    //             layer.msg('操作成功：审核通过!', {icon: 1, time: 2000});
+    //             setTimeout(function () {
+    //                 window.location.href = '/back/article/review';
+    //             }, 2000);
+    //
+    //         } else {
+    //             layer.msg('出现错误，请稍后再试!', {icon: 0, time: 2000});
+    //             //  setTimeout(function () {window.location.href='/back/cate';},2000);
+    //         }
+    //     });
+    // }
+    //
+    // function deny(obj, id) {
+    //     $.post("/back/article/deny", {"id": id}, function (data) {
+    //         if (data == 'true') {
+    //             layer.msg('操作成功：审核不通过!', {icon: 1, time: 2000});
+    //             setTimeout(function () {
+    //                 window.location.href = '/back/article/review';
+    //             }, 2000);
+    //
+    //         } else {
+    //             layer.msg('出现错误，请稍后再试!', {icon: 0, time: 2000});
+    //             //  setTimeout(function () {window.location.href='/back/cate';},2000);
+    //         }
+    //     });
+    // }
+
+</script>
+
+
+</body>
+</html>

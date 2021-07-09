@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>用户中心</title>
+
+
+    <div th:include="common :: headcommon"></div>
+</head>
+<body>
+<div th:replace="common :: #top_start"></div>
+
+<div class="layui-container container" style="padding-top:70px;">
+
+    <div class="main fly-user-main layui-clear">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+            <li class="layui-nav-item">
+                <a href="#">
+                    <i class="layui-icon">&#xe609;</i>
+                    我的主页
+                </a>
+            </li>
+            <li class="layui-nav-item layui-this">
+                <a href="/user/user_center">
+                    <i class="layui-icon">&#xe612;</i>
+                    用户中心
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="/user/set">
+                    <i class="layui-icon">&#xe620;</i>
+                    基本设置
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="fly-panel fly-panel-user">
+
+            <div class="layui-tab layui-tab-brief" lay-filter="user">
+                <ul class="layui-tab-title" id="LAY_mine">
+                    <li data-type="mine-jie" lay-id="index" class="layui-this">我发表的新闻（<span
+                            th:text="${lists.size()}">89</span>）
+                    </li>
+                    <li data-type="collection" data-url="/collection/find/" lay-id="collection">
+                        我收藏的新闻（<span th:text="${favArts.size()}">16</span>）
+                    </li>
+                    <li data-type="collection" data-url="/collection/find/" lay-id="collection">
+                        我的评论（<span th:text="${commentList.size()}">16</span>）
+                    </li>
+                </ul>
+
+
+                <div class="layui-tab-content" style="padding: 20px 0;">
+                    <!--                发表的板块-->
+                    <div class="layui-tab-item layui-show">
+                        <ul class="mine-view jie-row">
+
+                            <li th:each="list:${lists}">
+                                <!--              a标签加上target='_blank'新页面打开-->
+                                <a class="jie-title" th:href="@{/article/details/{id}(id=${list?.id})}"
+                                   th:text="${list?.title}">LayIM 3.5.0 发布，移动端版本大更新（带演示图）</a>
+                                <i th:text="${#dates.format(list?.createTime, 'yyyy-MM-dd HH:mm:ss')}">2017/3/14
+                                    上午8:30:00</i>
+                                <a class="mine-edit"  th:href="@{/article_pub(id=${list?.id})}">编辑</a>
+                                <button style="margin-left: 15px;height: 25px;" class="layui-btn" th:onclick="delArt(this,[[${list?.id}]])" >删除</button>
+<!--                                判断新闻状态-->
+                                <span th:if="${list?.status eq 1}" >审核通过</span>
+                                <span th:if="${list?.status eq 0}" style="color: #ffffff;background-color: #0a30d0">待审核</span>
+                                <span th:if="${list?.status eq 2}" style="color: #ffffff;background-color: #ff0000">审核不通过</span>
+                                <em>[[${list?.checkNum}]]阅</em>
+                            </li>
+                        </ul>
+
+                        <div id="LAY_page"></div>
+                    </div>
+
+                    <!--收藏的板块-->
+                    <div class="layui-tab-item">
+                        <ul class="mine-view jie-row">
+                            <div th:each="favorite:${favorites}">
+                                <li th:each="favArt:${favArts}" th:if="${favorite?.aid==favArt.id}" >
+                                    <a class="jie-title"  th:href="@{/article/details/{id}(id=${favArt?.id})}"
+                                       th:text="${favArt?.title}">layui 常见问题的处理和实用干货集锦</a>
+                                    <i>收藏于</i>
+                                    <i th:if="${favorite?.aid==favArt.id}"
+                                       th:text="${#dates.format(favorite?.addTime, 'yyyy-MM-dd HH:mm')}">收藏于23小时前</i>
+                                    <a  style="position: absolute;right: 0; top: 0;" th:onclick="delFav(this,[[${favArt?.id}]])">删除</a>
+                                    <!--                                th:href="@{/user/deleFav(aid=${favArt?.id})}"-->
+                                </li>
+                            </div>
+
+                        </ul>
+                        <div id="LAY_page1"></div>
+                    </div>
+
+                    <!--评论的板块-->
+                    <div class="layui-tab-item">
+                        <ul class="mine-view jie-row">
+                            <div th:each="comment:${commentList}">
+                                <li >
+                                    <a class="jie-title"  th:href="@{/article/details/{id}(id=${comment?.aid})}"
+                                       th:utext="${comment?.content}">layui 常见问题的处理和实用干货集锦</a>
+                                    <i>评论于</i>
+                                    <i
+                                       th:text="${#dates.format(comment?.comTime, 'yyyy-MM-dd HH:mm')}">收藏于23小时前</i>
+                                    <a  style="position: absolute;right: 0; top: 0;" th:onclick="delCom(this,[[${comment?.comid}]])">删除</a>
+                                    <!--                                th:href="@{/user/deleFav(aid=${favArt?.id})}"-->
+                                </li>
+                            </div>
+
+                        </ul>
+                        <div id="LAY_page1"></div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div th:replace="common :: #foot_start"></div>
+<script>
+    //用户收藏夹删除
+    function delFav(obj,aid){
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            $.post("/user/delFav",{"aid":aid},function (data) {
+                if(data.flag ==200){
+                    layer.msg(data.msg,{icon:1,time:2000});
+                    // setTimeout(function () {window.location.href='/back/user/manage';},2000);
+
+                }if (data.flag==400) {
+                    layer.msg(data.msg,{icon:0,time:2000});
+                    // setTimeout(function () {window.location.href='/back/user/manage';},2000);
+                }
+            });
+        });
+    }
+
+    //删除用户发表的新闻
+    function delArt(obj,aid){
+        layer.confirm('确认要删除新闻吗？',function(index){
+            //发异步删除数据
+            $.post("/user/delArt",{"aid":aid},function (data) {
+                console.log(aid);
+                if(data.flag ==200){
+                    layer.msg(data.msg,{icon:1,time:2000});
+                    setTimeout(function () {window.location.href='/user/user_center';},2000);
+
+                }if (data.flag==400) {
+                    layer.msg(data.msg,{icon:0,time:2000});
+                    // setTimeout(function () {window.location.href='/back/user/manage';},2000);
+                }
+            });
+        });
+    }
+
+    //删除用户的评论
+    function delCom(obj,comid){
+        layer.confirm('确认要删除新闻吗？',function(index){
+            //发异步删除数据
+            $.post("/user/delCom",{"comid":comid},function (data) {
+                console.log(comid);
+                if(data.flag ==200){
+                    layer.msg(data.msg,{icon:1,time:2000});
+                    setTimeout(function () {window.location.href='/user/user_center';},2000);
+
+                }if (data.flag==400) {
+                    layer.msg(data.msg,{icon:0,time:2000});
+                    // setTimeout(function () {window.location.href='/back/user/manage';},2000);
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>

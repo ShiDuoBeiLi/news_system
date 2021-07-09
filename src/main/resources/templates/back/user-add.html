@@ -1,0 +1,121 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>添加新用户页面</title>
+    <div th:include="common :: headcommon"></div>
+    <script type="text/javascript" src="/xadmin/js/xadmin.js"></script>
+    <script th:src="@{/js/index/register.js}" type="text/javascript"></script>
+
+</head>
+<body>
+
+<div  style="padding-top: 10px;width: 700px;">
+
+        <form class="layui-form "  >
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="uname" required lay-verify="uname" placeholder="请输入用户账号"
+                           autocomplete="off" class="layui-input"  >
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码框</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" required lay-verify="password" placeholder="请输入密码"
+                           autocomplete="off" class="layui-input" id="password">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="sex" value="男" title="男" checked >
+                    <input type="radio" name="sex" value="女" title="女" >
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-block" style="width: 190px">
+                    <input type="tel" name="telephone" required lay-verify="tel" placeholder="请输入用户手机号"
+                           autocomplete="off" class="layui-input" >
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block" style="width: 190px" >
+                    <input type="email" name="email" required lay-verify="required" placeholder="请输入用户邮箱"
+                           autocomplete="off" class="layui-input" >
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否激活账号</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="active" value="1" title="是"  checked >
+                    <input type="radio" name="active" value="0" title="否" >
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">用户等级:</label>
+                <div class="layui-input-block">
+                    <select name="lid">
+                        <!--     selected        不选择为0默认查询所有等级-->
+                        <option value="" >请选择用户等级</option>
+                        <option value="1" >1</option>
+                        <option   th:if="${session.back_user.lid} eq '3'" value="2" >2</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="padding-top: 10px;">
+                <div class="layui-input-block">
+                    <button class="layui-btn" type="button" lay-submit lay-filter="addOne">添加</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+</div>
+<script>
+    layui.use(['form','jquery','layer'],function (){
+        var form = layui.form,
+            $ = layui.jquery;
+
+        form.on('submit(addOne)',function (data){
+           var param=data.field;
+            $.ajax({
+                url:'/back/user/addOne',
+                type:'post',
+                // async:false,
+                data:JSON.stringify(param),
+                contentType: "application/json; charset=utf-8",
+                dataType:"json",
+                success:function (data){
+                    // console.log("接收的数据为"+data);
+                    //添加新用户失败
+                    if (data.status==400 || data.status==401){
+                        layer.msg(data.msg,{icon:0,time :3000});
+                    }
+                    //添加新用户成功
+                    if (data.status==200){
+                        layer.alert(data.msg,function (){
+                            // window.location.href='/back/user/manage';
+                            x_admin_close();
+
+                        })
+
+                        // layer.msg(data.msg,{icon:1,time: 3000});
+                         // setTimeout(function () {window.location.href='/back/user/manage';},2000);
+                        //window.location.href='/index';
+                    }
+                }
+
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

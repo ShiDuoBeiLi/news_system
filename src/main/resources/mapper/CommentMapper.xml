@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wxm.news_demo.mapper.CommentMapper">
+
+    <resultMap id="rm1" type="comment">
+        <id property="comid" column="comid"/>
+        <result property="aid" column="aid"/>
+        <result property="uid" column="uid"/>
+        <result property="content" column="content"/>
+        <result property="comTime" column="com_time"/>
+        <result property="illegal" column="illegal"/>
+        <association property="user" javaType="user">
+            <id property="uid" column="uid"></id>
+            <result property="uname" column="uname"/>
+            <result property="newsName" column="news_name"/>
+            <result property="lid" column="lid"/>
+        </association>
+     </resultMap>
+<!--    后台新闻评论管理，可以依据条件查询-->
+    <select id="findComByStatus" resultMap="rm1">
+        select  t_comment.*,t_user.uname,t_user.lid,t_user.news_name from t_comment
+        left join t_user on t_comment.uid=t_user.uid
+        <where>
+            <if test="uname!=null and uname!=''">
+                and t_user.uname like concat('%',#{uname},'%')
+            </if>
+            <if test="lid!=null and lid!=''">
+                and  t_user.lid = #{lid}
+            </if>
+            <if test="illegal!=null">
+                and t_comment.illegal=#{illegal}
+            </if>
+        </where>
+        and t_user.lid &lt; #{userLid}
+        ORDER BY t_comment.com_time DESC
+    </select>
+</mapper>

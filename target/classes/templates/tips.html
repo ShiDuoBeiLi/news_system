@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>提示页面</title>
+
+
+    <div th:include="common :: headcommon"></div>
+</head>
+<body>
+<div th:replace="common :: #top_start"></div>
+
+<div class="layui-container container">
+    <div class="fly-none">
+        <h2><i class="iconfont icon-tishilian"></i></h2>
+        <p>这是一个基于 layui 的轻个人博客模版</p>
+    </div>
+</div>
+<div th:replace="common :: #foot_start"></div>
+</body>
+</html>

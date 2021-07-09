@@ -1,0 +1,62 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>用户登录</title>
+    <div th:include="common :: headcommon"></div>
+    <script th:src="@{/js/index/login.js}" type="text/javascript"></script>
+</head>
+<body>
+<div th:replace="common :: #top_start"></div>
+
+<div class="layui-container container layui-layer-border back">
+    <h2 class="register-title">用户登录</h2>
+    <div class="login">
+        <form class="layui-form "  >
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="uname" required lay-verify="uname" placeholder="请输入用户名"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" required lay-verify="password" placeholder="请输入密码"
+                           autocomplete="off" class="layui-input" id="password">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">验证码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="checkcode" required lay-verify="checkcode" placeholder="请输入验证码"
+                           autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <img src="/user/register/checkCode" onclick="changeCheckCode(this)" alt="更换验证码">
+                    <!--                    更换验证码-->
+                    <script type="text/javascript">
+                        //图片点击事件
+                        function changeCheckCode(img) {
+                            img.src = "/user/register/checkCode?" + new Date().getTime();
+                        }
+                    </script>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" type="button" lay-submit lay-filter="login">登录</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div th:replace="common :: #foot_start"></div>
+</body>
+</html>

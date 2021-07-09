@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wxm.news_demo.mapper.ArticleMapper">
+
+<!--   联合查询，该映射为返回其分类信息 -->
+    <resultMap id="rm1" type="article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+        <result property="status" column="status"/>
+        <result property="checkNum" column="check_num"/>
+        <result property="imgSrc" column="img_src"/>
+        <result property="authorId" column="author_id"/>
+        <result property="editTime" column="edit_time"/>
+        <result property="lid" column="lid"/>
+        <result property="cid" column="cid"/>
+<!--        <result property="cname" column="cname"/>-->
+        <association property="category" javaType="cn.wxm.news_demo.domain.Category">
+            <id property="cid" column="cid"/>
+            <result property="cname" column="cname"/>
+        </association>
+
+        <association property="user" javaType="cn.wxm.news_demo.domain.User">
+            <id property="uid" column="uid"/>
+            <result property="uname" column="uname"/>
+            <result property="newsName" column="news_name"/>
+        </association>
+
+    </resultMap>
+    
+    <select id="addCateAll" resultMap="rm1">
+        SELECT * FROM t_article right join t_category on t_article.cid=t_category.cid ORDER BY create_time DESC;
+    </select>
+
+
+<!--    添加分类属性-->
+        <select id="findByPage" resultMap="rm1">
+         select  t_article.*,t_category.cname from t_article
+         left join t_category on t_article.cid=t_category.cid
+         LEFT JOIN t_user on t_article.author_id=t_user.uid
+          ${ew.customSqlSegment}
+    </select>
+
+<!--    根据文章id查找文章详细信息，多表关联查询-->
+    <select id="findMessageId" resultMap="rm1">
+         select  t_article.*,t_category.cname,t_user.uid,t_user.uname,t_user.news_name from t_article
+ left join t_category on t_article.cid=t_category.cid
+ LEFT JOIN t_user on t_article.author_id=t_user.uid
+WHERE  t_article.id=#{aid}
+    </select>
+
+<!--    &lt;为小于号转义字符，查询未审核新闻-->
+    <select id="findAllByStatus" resultMap="rm1">
+        select t_article.*,t_category.cname,t_user.uid,t_user.uname,t_user.news_name from t_article
+        left join t_category on t_article.cid=t_category.cid
+        LEFT JOIN t_user on t_article.author_id=t_user.uid
+        <where>
+            <if test="uname!=null and uname!=''">
+                and t_user.uname like concat('%',#{uname},'%')
+            </if>
+            <if test="cname!=null and cname!=''">
+                and t_category.cname like concat('%',#{cname},'%')
+            </if>
+            <if test="title!=null and title!=''">
+                and t_article.title like concat('%',#{title},'%')
+            </if>
+            <if test="lid!=null and lid!=''">
+                and t_article.lid &lt; #{lid}
+            </if>
+        </where>
+        and t_article.status=#{status}
+
+    </select>
+
+
+</mapper>

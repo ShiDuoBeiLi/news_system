@@ -1,0 +1,57 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>首页</title>
+
+    <div th:include="common :: headcommon"></div>
+
+    <!--
+    -->
+</head>
+<body>
+<div th:replace="common :: #top_start"></div>
+
+<div class="layui-container container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md9">
+            <ul class="layui-timeline">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">发展历程</h3>
+                        <p>
+                            一个想法
+                        </p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">9月5日</h3>
+                        <p>正式开发前端模板</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">未来</div>
+                        <p>未来很美好</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-bg-red">3/12</div>
+        </div>
+    </div>
+
+    <!--分页
+    <div id="page"></div>
+    -->
+    <div id="footer">
+
+    </div>
+
+</body>
+</html>

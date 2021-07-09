@@ -1,0 +1,179 @@
+!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>设置</title>
+  <div th:include="common :: headcommon"></div>
+  <script th:src="@{/js/index/set.js}" type="text/javascript"></script>
+
+</head>
+<body>
+<div th:replace="common :: #top_start"></div>
+
+    <div class="layui-container container" style="padding-top:70px;">
+   
+    	<div class="main fly-user-main layui-clear">
+  <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+
+    <li class="layui-nav-item">
+      <a href="#">
+        <i class="layui-icon">&#xe609;</i>
+        我的主页
+      </a>
+    </li>
+    <li class="layui-nav-item">
+      <a href="/user/user_center">
+        <i class="layui-icon">&#xe612;</i>
+        用户中心
+      </a>
+    </li>
+    <li class="layui-nav-item layui-this">
+      <a href="/user/set">
+        <i class="layui-icon">&#xe620;</i>
+        基本设置
+      </a>
+    </li>
+<!--    <li class="layui-nav-item">-->
+<!--      <a href="/message">-->
+<!--        <i class="layui-icon">&#xe611;</i>-->
+<!--        我的消息-->
+<!--      </a>-->
+<!--    </li>-->
+  </ul>
+
+  
+  <div class="fly-panel fly-panel-user">
+
+    <div class="layui-tab layui-tab-brief" lay-filter="user">
+      <ul class="layui-tab-title" id="LAY_mine">
+        <li class="layui-this" lay-id="info">我的资料</li>
+        <li lay-id="avatar">头像</li>
+        <li lay-id="pass">密码</li>
+<!--        <li lay-id="bind">帐号绑定</li>-->
+      </ul>
+
+<!--修改个人资料-->
+      <div class="layui-tab-content" style="padding: 20px 0;">
+        <div class="layui-form layui-form-pane layui-tab-item layui-show">
+          <form class="layui-form" method="post" action="#">
+            <div class="layui-form-item">
+              <div class="layui-form-item">
+                <label for="uname" class="layui-form-label">用户账号</label>
+                <div class="layui-input-inline">
+                  <input type="text"  name="uname"  autocomplete="off" value="" class="layui-input" th:value="${session.user?.uname}" disabled>
+                </div>
+              </div>
+              <label for="email" class="layui-form-label">邮箱</label>
+              <div class="layui-input-inline">
+                <input type="text" name="email" lay-verify="email"  autocomplete="off" class="layui-input" th:value="${session.user?.email}">
+              </div>
+<!--              <div class="layui-form-mid" th:if="${session.user.active==1}">如果您在邮箱已激活的情况下，变更了邮箱，需<a href="#" style="font-size: 12px; color: #4f99cf;">重新验证邮箱</a>。</div>-->
+              <div class="layui-form-mid" th:if="${session.user?.active!=1}">
+                <a onclick="active()" href="#" style="color: #1E9FFF">激活账号</a>
+                （如需修改邮箱，请确认修改再点击激活账号）
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label for="telephone" class="layui-form-label">电话</label>
+              <div class="layui-input-inline">
+                <input type="text"  name="telephone"  lay-verify="tel" autocomplete="off" th:value="${session.user?.telephone}" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label for="newsName" class="layui-form-label">用户昵称</label>
+              <div class="layui-input-inline">
+                <input type="text" name="newsName" th:value="${session.user?.newsName}"  lay-verify="required"  autocomplete="off" value="" class="layui-input">
+              </div>
+              <div class="layui-inline">
+                <div class="layui-input-inline">
+                  <input type="radio" name="sex" value="男"  title="男" checked th:if="${session.user.sex=='男'}">
+                  <input type="radio" name="sex" value="男" title="男"  th:if="${session.user.sex!='男'}">
+                  <input type="radio" name="sex" value="女" title="女" checked th:if="${session.user.sex=='女'}">
+                  <input type="radio" name="sex" value="女" title="女"  th:if="${session.user.sex!='女'}">
+                </div>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <button class="layui-btn" type="button" lay-filter="alterInfo" lay-submit>确认修改</button>
+            </div>
+            </form>
+          </div>
+<!--修改个人呢头像-->
+<!--        <img src="/images/none.jpg">-->
+                  <div class="layui-form layui-form-pane layui-tab-item">
+                    <div class="layui-form-item">
+                      <div class="avatar-add">
+                        <p style="top: 90px;">建议尺寸168*168，支持jpg、png、gif，最大不能超过1MB</p>
+                        <div class="upload-img" style="top: 5px;">
+                        	<button type="button" class="layui-btn layui-bg-blue" id="upload_head">
+                            <i class="layui-icon"></i>选择头像</button>
+                        </div>
+
+                        <div  style="top: 60px;text-align: center;position: absolute;left: 126px;">
+                          <button  style="width: 113px;" type="button " class="layui-btn " id="cer_head">开始上传</button>
+                        </div>
+                        <img id="user_img" src="/images/none.jpg" th:src="@{${user.headImage}}">
+                        <span class="loading"></span>
+                      </div>
+                    </div>
+                  </div>
+<!--          修改密码-->
+          <div class="layui-form layui-form-pane layui-tab-item">
+            <form class="layui-form" method="post" action="#">
+              <div class="layui-form-item">
+                <label for="cur_pass" class="layui-form-label">当前密码</label>
+                <div class="layui-input-inline">
+                  <input type="password"  name="cur_pass" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label for="new_pass" class="layui-form-label">新密码</label>
+                <div class="layui-input-inline">
+                  <input type="password"  id="password" name="password" lay-verify="password" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid ">至少6位，包含一位英文和数字</div>
+              </div>
+              <div class="layui-form-item">
+                <label for="re_pass" class="layui-form-label">确认密码</label>
+                <div class="layui-input-inline">
+                  <input type="password" name="re_pass" lay-verify="repassword" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <button class="layui-btn" type="button" lay-filter="alterPassword" lay-submit>确认修改</button>
+              </div>
+            </form>
+          </div>
+
+<!--        账号绑定-->
+<!--          <div class="layui-form layui-form-pane layui-tab-item">-->
+<!--            <ul class="app-bind">-->
+<!--              <li class="fly-msg app-havebind">-->
+<!--                <i class="iconfont icon-qq"></i>-->
+<!--                <span>已成功绑定，您可以使用QQ帐号直接登录Fly社区，当然，您也可以</span>-->
+<!--                <a href="javascript:;" class="acc-unbind" type="qq_id">解除绑定</a>-->
+<!--                -->
+<!--                &lt;!&ndash; <a href="" onclick="layer.msg('正在绑定微博QQ', {icon:16, shade: 0.1, time:0})" class="acc-bind" type="qq_id">立即绑定</a>-->
+<!--                <span>，即可使用QQ帐号登录Fly社区</span> &ndash;&gt;-->
+<!--              </li>-->
+<!--              <li class="fly-msg">-->
+<!--                <i class="iconfont icon-weibo"></i>-->
+<!--                &lt;!&ndash; <span>已成功绑定，您可以使用微博直接登录Fly社区，当然，您也可以</span>-->
+<!--                <a href="javascript:;" class="acc-unbind" type="weibo_id">解除绑定</a> &ndash;&gt;-->
+<!--                -->
+<!--                <a href="" class="acc-weibo" type="weibo_id"  onclick="layer.msg('正在绑定微博', {icon:16, shade: 0.1, time:0})" >立即绑定</a>-->
+<!--                <span>，即可使用微博帐号登录Fly社区</span>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+<div th:replace="common :: #foot_start"></div>
+    </body>
+</html>

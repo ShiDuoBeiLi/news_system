@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <link rel="stylesheet" th:href="@{/css/global.css}"/>-->
+<!--    <link rel="stylesheet" th:href="@{/xadmin/css/xadmin.css}"/>-->
+<!--    <link rel="stylesheet" th:href="@{/layui/css/modules/layer/default/layer.css}"/>-->
+</head>
+<body>
+<div class="page-content">
+    <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+<!--        <ul class="layui-tab-title">-->
+<!--            <li class="home"><i class="layui-icon">&#xe68e;</i>我的桌面</li>-->
+<!--        </ul>-->
+<!--        <div class="layui-tab-content"  style="width: 800px;height: 400px;">-->
+        <div style="width: 800px;height: 400px;">
+            <div >
+                <h2 style="text-align: center" >用户[[${session.back_user.uname}]]，欢迎来到新闻后台管理系统！</h2>
+                <div class="layui-col-md6" style="padding: 30px;left: 60px;background-color: #F2F2F2;">
+                    <div class="layui-card">
+                        <div  style="padding: 5px;">用户信息</div>
+                        <div style="padding: 5px;">
+<!--                            <%&#45;&#45;<div class="layui-form-label" style="text-align: left">你好</div>&#45;&#45;%>-->
+                            用户名：[[${session.back_user.uname}]]
+                        </div>
+                        <div style="padding: 5px;">
+                            电话：[[${session.back_user.telephone}]]
+                        </div>
+                        <div style="padding: 5px;">
+                            邮箱：[[${session.back_user.email}]]
+                        </div>
+                        <div style="padding: 5px;">
+                            级别：[[${session.back_user.lid}]]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
