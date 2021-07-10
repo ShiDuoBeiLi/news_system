@@ -27,9 +27,7 @@
 - Thymeleaf——模板引擎
 - Layui（前端框架）
 
-系统中用到的模板都与Layui相关，前台界面：https://gitee.com/myjavase/layuiQianDuanMoBan
-
-后台管理模板：[X-admin: X-admin经典前端后台管理模板 (gitee.com)](https://gitee.com/daniuit/X-admin)
+系统中用到的模板都与Layui相关，后台管理模板：[X-admin: X-admin经典前端后台管理模板 (gitee.com)](https://gitee.com/daniuit/X-admin)
 
 ## 案例展示
 
