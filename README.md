@@ -33,36 +33,36 @@
 
 首页展示：
 
-![首页展示](https://gitee.com/bychanense/img-store/raw/master/1.png)
+![首页展示](https://gitee.com/Xmee-w/img-store/raw/master/1.png)
 
 新闻详情页：
 
-![新闻详情页](https://gitee.com/bychanense/img-store/raw/master/2.png)
+![新闻详情页](https://gitee.com/Xmee-w/img-store/raw/master/2.png)
 
 用户中心：展示收藏和评论的新闻
 
-![用户中心](https://gitee.com/bychanense/img-store/raw/master/3.png)
+![用户中心](https://gitee.com/Xmee-w/img-store/raw/master/3.png)
 
 新闻发布页：
 
-![新闻发布页](https://gitee.com/bychanense/img-store/raw/master/4.png)
+![新闻发布页](https://gitee.com/Xmee-w/img-store/raw/master/4.png)
 
 后台首页：
 
-![后台首页](https://gitee.com/bychanense/img-store/raw/master/5.png)
+![后台首页](https://gitee.com/Xmee-w/img-store/raw/master/5.png)
 
 新闻审核页面：
 
-![新闻审核页面](https://gitee.com/bychanense/img-store/raw/master/6.png)
+![新闻审核页面](https://gitee.com/Xmee-w/img-store/raw/master/6.png)
 
 ## 一些说明
 
 - 运行项目中的NewsDemoApplication.java，在浏览器输入:localhost:8080或者localhost:8080/index都可以。配置文件可在resource目录application.properties和application.yaml修改
 - 图片保存在“src/main/resources/static/upload”目录下
 
-- sql文件直接放在项目根文件夹下，名字为“news_demo”，所有登录用户密码为“admin1”,管理员需要结合用户表的ad_role和lid字段
+- sql文件直接放在项目根文件夹下，名字为“news_demo”，所有**登录用户密码为“admin1”**,管理员需要结合用户表的ad_role和lid字段来判断
 
-- 另外，项目中进行邮箱验证，我是使用个人邮箱账号+客户端授权码来发送邮箱认证，文件存放在“main/java/cn/wxm/news_demo/utils”下的MailUtils5.java文件，修改文件中的USER和PASSWORD变量，改成自己的账号即可
+- 另外，如果需要注册或者激活账号，需要在项目中进行邮箱配置，我是使用个人邮箱账号+客户端授权码来发送邮箱认证，文件存放在“main/java/cn/wxm/news_demo/utils”下的MailUtils.java文件，修改文件中的USER和PASSWORD变量，改成自己的账号即可
 
 最后说句，如果觉得不错就star或者fork吧！！！
 
