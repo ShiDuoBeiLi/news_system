@@ -47,6 +47,9 @@
 
 ![后台首页](https://raw.githubusercontent.com/ShiDuoBeiLi/news_system/master/newsImg/admin.png)
 
+论文目录：https://raw.githubusercontent.com/ShiDuoBeiLi/news_system/master/newsImg/593febb06dca2a61a4b015f1c6fbac9.png
+
+![论文目录](https://raw.githubusercontent.com/ShiDuoBeiLi/news_system/master/newsImg/593febb06dca2a61a4b015f1c6fbac9.png)
 
 ## 一些说明
 
