@@ -51,14 +51,6 @@
                 </div>
             </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">是否激活账号</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="active" value="1" title="是"  th:field="*{userInfo.active}">
-                    <input type="radio" name="active" value="0" title="否" th:field="*{userInfo.active}">
-                </div>
-            </div>
-
             <div class="layui-form-item" th:if="${userInfo.lid} eq 2">
                 <label class="layui-form-label">是否为管理员</label>
                 <div class="layui-input-block">

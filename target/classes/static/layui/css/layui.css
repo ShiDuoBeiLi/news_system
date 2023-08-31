@@ -2581,10 +2581,11 @@ body .layui-table-tips .layui-layer-content {
 .layui-nav .layui-nav-item a {
     display: block;
     padding: 0 20px;
-    color: #fff;
-    color: rgba(255, 255, 255, .7);
+    color: #666;
+    /*color: rgba(160, 156, 156, 0.7);*/
     transition: all .3s;
-    -webkit-transition: all .3s
+    -webkit-transition: all .3s;
+    font-size: 15px;
 }
 
 .layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after {
@@ -2603,7 +2604,7 @@ body .layui-table-tips .layui-layer-content {
 }
 
 .layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a {
-    color: #fff
+    color: #666
 }
 
 .layui-nav .layui-this:after {

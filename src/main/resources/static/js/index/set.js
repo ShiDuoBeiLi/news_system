@@ -128,20 +128,3 @@ layui.use('upload', function(){
   });
 });
 
-//用户手动发送激活邮件
-function active(){
-    $.ajax({
-        url:'/user/per_active',
-        type:'get',
-        success:function (data){
-            // console.log("接收的数据为"+data);
-            //邮件发送成功
-            if (data.flag==200){
-                layer.alert("已向您邮箱发送激活邮件，请前往邮件内点击链接激活账号",);
-            }
-
-        }
-
-    });
-
-}

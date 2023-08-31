@@ -58,13 +58,6 @@ layui.use(['form', 'layedit'], function () {
                     // console.log("success");
                     setTimeout(function () {window.location.href='/user/user_center';},2000);
                 }
-                if (data.data==400){
-                    layer.alert("发布失败，该账号尚未通过邮箱激活认证，请先激活账号",);
-                    // layer.msg('发布失败，该账号尚未通过邮箱激活认证，请先激活账号', {icon: 0, time: 3000});
-                    // console.log("success");
-                    // setTimeout(function () {window.location.href='/index';},2000);
-                }
-
 
             },
             error:function(){
@@ -80,13 +73,16 @@ layui.use(['form', 'layedit'], function () {
     form.verify({
         title: function (value) {
             if (value.length < 5) {
-                return '标题至少得5个字符';
+                return '标题至少5个字符';
             }
         }
         , content: function (value) {
             var content = layedit.getContent(editIndex);  //获取编辑器的内容
             if (content.length <= 0) {
                 return '文章内容不能为空';
+            }
+            if (content.length <= 100) {
+                return '文章内容不能低于100字';
             }
             return layedit.sync(editIndex);
         }

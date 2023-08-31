@@ -91,11 +91,6 @@ layui.use(['layedit', 'form', 'layer', 'laypage'], function(){
 					layer.alert("请登录后在进行评论",);
 
 				}
-				if (data.flag==401){
-					layer.alert("请激活账号后在进行评论",);
-
-				}
-
 
 			},
 			// error:function(){

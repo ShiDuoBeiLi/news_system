@@ -145,33 +145,29 @@
                 </div>
             </form>
 
-            <div class="ad"><img lay-src="/images/ad.jpg"></div>
             <div class="ms-top">
-                <ul class="hd" id="tab">
-                    <li class="cur"><a>点击排行</a></li>
+
+                <ul class="hd" id="tab" style="margin-left: 115px">
+                    <li class="cur"><a>点击排行</a><img src="" alt="" th:src="@{/images/newsbg05.png}" ></li>
                 </ul>
             </div>
             <div class="ms-main" id="ms-main">
                 <div style="display: block;" class="bd bd-news">
-                    <ul>
-                        <li th:each="rowlist:${session.rowLists}"><a href="#" target="_blank"
-                                                                     th:text="${rowlist.getTitle()}"
-                                                                     th:href="@{/article/details/{id}(id=${rowlist.getId()})}">住在手机里的朋友</a>
-                        </li>
+                    <ul >
+                        <li th:each="rowlist:${session.rowLists}"><a href="#" target="_blank" th:text="${rowlist.getTitle()}"
+                                                                     th:href="@{/article/details/{id}(id=${rowlist.getId()})}">住在手机里的朋友</a></li>
 
                     </ul>
                 </div>
 
             </div>
 
-            <div>
+            <div style="background-color: #eee;margin-top: 10px">
                 <div class="bd-news">
-                    <h3 class="per_test">最新新闻</h3>
-                    <ul>
-                        <li th:each="newList:${session.newLists}"><a href="#" target="_blank"
-                                                                     th:text="${newList.getTitle()}"
-                                                                     th:href="@{/article/details/{id}(id=${newList.getId()})}">原来以为，一个人的勇敢是，删掉他的手机号码...</a>
-                        </li>
+                    <span class="per_test">最新新闻</span><img class="new_img" src="" alt="" th:src="@{/images/newsbg06.png}" >
+                    <ul  >
+                        <li th:each="newList:${session.newLists}"><a  href="#" target="_blank" th:text="${newList.getTitle()}"
+                                                                      th:href="@{/article/details/{id}(id=${newList.getId()})}">原来以为，一个人的勇敢是，删掉他的手机号码...</a></li>
 
                     </ul>
                 </div>
@@ -198,7 +194,6 @@
             </div>
 
 
-            <div class="ad"><img lay-src="/images/03.jpg"></div>
             <div class="links">
                 <h3>友情链接</h3>
                 <!--                <h3><span>[<a href="#">申请友情链接</a>]</span>友情链接</h3>-->

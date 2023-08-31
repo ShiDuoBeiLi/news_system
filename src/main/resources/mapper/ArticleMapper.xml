@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.wxm.news_demo.mapper.ArticleMapper">
+<mapper namespace="cn.lyl.news_system.mapper.ArticleMapper">
 
 <!--   联合查询，该映射为返回其分类信息 -->
     <resultMap id="rm1" type="article">
@@ -18,12 +18,12 @@
         <result property="lid" column="lid"/>
         <result property="cid" column="cid"/>
 <!--        <result property="cname" column="cname"/>-->
-        <association property="category" javaType="cn.wxm.news_demo.domain.Category">
+        <association property="category" javaType="cn.lyl.news_system.domain.Category">
             <id property="cid" column="cid"/>
             <result property="cname" column="cname"/>
         </association>
 
-        <association property="user" javaType="cn.wxm.news_demo.domain.User">
+        <association property="user" javaType="cn.lyl.news_system.domain.User">
             <id property="uid" column="uid"/>
             <result property="uname" column="uname"/>
             <result property="newsName" column="news_name"/>

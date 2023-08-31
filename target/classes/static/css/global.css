@@ -24,13 +24,17 @@
 
 
 /*注册页面*/
-.register{min-height: 500px; padding-top:50px;padding-left:150px;width: 84.5%}
-.register-title{position: relative; font-size: 14px; padding: 10px 15px; line-height:30px; background-color: #F2F2F2}
+.register{min-height: 500px;padding-top: 50px;padding-left: 15px;width: 62.5%;background-color: #FFFFFF;margin-left: 168px;}
+.register-title{position: relative;font-size: 14px;padding: 10px 267px;line-height: 30px;background-color: #F2F2F2;width: 87px;margin-left: 168px;
+}
+.login-title{position: relative; font-size: 14px; padding: 10px 196px; line-height:30px; background-color: #F2F2F2;width: 63px;margin-left: 246px}
 /*登录页面*/
-.login{min-height: 400px; padding-top:150px;padding-left:250px;width: 74%}
+.login{min-height: 110px; padding-top:150px;width: 47%;background-color: #FFFFFF;margin-left: 246px}
   /*background: #e2e2e2}*/
 /*.back{background: #e2e2e2}*/
-.back{background-image:url("../images/bg.jpg")}
+.back{
+  background-image:url("../images/bg.jpg")
+}
 
 /* 图标 */
 @font-face {font-family: "iconfont";
@@ -100,20 +104,19 @@
 
 .container{padding-top:80px; width:1000px;}
 html{overflow-x: hidden; overflow-y: auto; background-color: #FFF;}
-body {line-height:24px; font: 12px/1.5 'Microsoft Yahei', 'Simsun'; color: #666666;}
+body {line-height:24px; font: 12px/1.5 'Microsoft Yahei', 'Simsun'; color: #666666; background-color: #f8f8f8;}
 i{font-style: normal;}
 
 /* 头部 */
-.header{position:fixed; z-index: 10000; left:0; top:0; width:100%; height:65px; background-color:#393D49;}
+.header{position:fixed; z-index: 10000; left:0; top:0; width:100%; height:65px; background-color:#ffffff;}
 .header .main{position:relative; margin:0 auto; min-height: 0;}
 .logo{position:absolute; top: 13px; left:0; width: 135px; height: 37px; text-indent:-666px;
-background:url(../images/logo.png) no-repeat;}
-.layui-nav-left{margin-left:120px;}
-.layui-nav-right{margin-right:120px;}
+background:url(../images/logo.jpg) no-repeat;}
+.layui-nav-left{margin-left:120px; background-color: #ffffff}
+.layui-nav-right{margin-right:120px; background-color: #ffffff}
 .nav-left{margin-left:130px;}
-
 /*footer*/
-.footer {width: auto; clear: both; text-align: center;}
+.footer {width: auto; clear: both; text-align: center;background-color: #FFFFFF}
 .footer1 {width: 100%; clear: both; text-align: center;position: fixed;buttom:0;}
 .bottom-item {
   bottom: 0;
@@ -128,11 +131,12 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 /*首页文章列表显示*/
 /*左文章列表*/
 .article-main { margin: 15px 0;}
-.article-main h2 { font-size: 16px; font-weight: bold; line-height: 36px; color: #333; border-bottom: #db6d4c 4px solid; }
+.article-main h2 { font-size: 16px; font-weight: bold; line-height: 36px; color: #333; border-bottom: #88b9ff 4px solid; }
 .article-main h2 span { float: right; font-size: 12px; font-weight: normal; }
 .article-main h2 span a { display: inline-block; padding: 0 5px; }
 .article-main h2 span a:hover { color: #000 }
 .article-list { padding: 20px 0px; position: relative; border-bottom: #CCC 1px solid; overflow: hidden ;}
+.article-list:hover {box-shadow: 10px 5px 5px #888888;}
 .article-list h3 { font-size: 16px; font-weight: bold; transition: all .5s; margin: 0px 0px 10px 0px; }
 .article-list h3 a { color: #474645; }
 .article-list h3 a:hover { color: #066; text-decoration: underline }
@@ -143,18 +147,20 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .article-list ul { float: right; line-height: 22px; width: 100%; color: #756F71; margin-right:0px;}
 .article-list ul text-area{  width: 100%;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;}
 .autor { overflow: hidden; clear: both; margin: 0px 0; display: inline-block; color: #838383; width: 100%; padding-top:7px;}
-.autor span { margin: 0 30px 0 0; padding-left: 20px }
-.autor span a { color: #759b08; }
+.autor span { margin: 0 30px 0 0; }
+/*.autor span a { color: #919b08; }*/
 .autor span a:hover { text-decoration: underline }
-.lm { background: url(../images/newsbg01.png) no-repeat left center }
-.dtime { background: url(../images/newsbg02.png) no-repeat left center }
-.viewnum { background: url(../images/newsbg04.png) no-repeat left center }
+/*.lm { background: url(../images/newsbg01.png) no-repeat left center }*/
+/*.dtime { background: url(../images/newsbg02.png) no-repeat left center }*/
+/*.viewnum { background: url(../images/newsbg04.png) no-repeat left center }*/
 .pingl { background: url(../images/newsbg03.png) no-repeat left center }
 
 /* 右侧切换卡 */
-.ms-top { height: 32px; border-bottom: solid 1px #EAEAEA; font-size: 14px }
+.ms-top { height: 32px; border-bottom: solid 1px #EAEAEA; font-size: 14px; background-color: #eee}
+.ms-main {background-color: #eee}
+.cur img {width: 31px;height: 20px;margin-top: 6px;margin-left: -17px;}
 #tab li a { float: left; height: 32px; cursor: pointer; line-height: 32px; list-style-type: none; padding: 0 10px; }
-#tab li.cur a { color: #fff; background: #f77825; }
+#tab li.cur a { color: black; font-size: 15px;font-weight: bolder }
 .bd { display: none }
 .bd-news ul { padding: 10px 0 0 40px; background: url(../images/ph2.png) no-repeat 5px 29px; }
 .bd-news ul li { border-bottom: solid 1px #EAEAEA; line-height: 30px; height: 30px; overflow: hidden; font-size: 14px; padding: 10px 0 0 0px; }
@@ -181,8 +187,8 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .cloud ul li:hover { border-radius: 0; text-shadow: #000 1px 1px 1px }
 
 .newComArt {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 300px;}
-
-.per_test{ line-height: 40px; color: #38485A; font-size: 18px; border-bottom: 1px solid #E6E6E6; height: 40px; margin-top: 20px; }
+.new_img {width: 37px;height: 27px;margin-top: -5px;margin-left: -1px;}
+.per_test{ line-height: 40px; color: black; font-size: 15px; font-weight: bolder; border-bottom: 1px solid #E6E6E6; height: 40px; margin-top: 20px; margin-left: 120px }
 
 /*图文列表*/
 .tuwen { width: 100%; clear: both; overflow: hidden; margin: 15px 0 }
@@ -200,8 +206,8 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .tuwen li:hover { background: #f4f3f3 }
 
 /*首页右侧广告 310*/
-.ad { width: 310px; overflow: hidden; margin: 15px 0 }
-.ad img { width: 310px; }
+.ad { width: 310px; overflow: hidden; margin: 10px 0 ;margin-left: 10px}
+.ad img { width: 310px; height: 80px}
 
 /*友情链接*/
 .links { width: 100%; overflow: hidden; clear: both }
@@ -283,7 +289,7 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .jieda-admin{position:absolute; right:0; top:0;}
 
 /*文章发布*/
-.page-title{position: relative; font-size: 14px; margin: 0 0 20px; padding: 10px 15px; line-height:30px; background-color: #F2F2F2}
+.page-title{position: relative; font-size: 14px; margin: 0 0 20px; padding: 10px 15px; line-height:30px; background-color: #F2F2F2;padding-left: 453px}
 /*ci-nav*/
 .ci-nav{position: relative; font-size: 14px; margin: 0 0 20px; padding: 10px 15px; line-height:30px; background-color: #e4e8fe}
 

@@ -33,18 +33,17 @@
 
     <!--    次级导航-->
     <div th:replace="common :: #ci_nav"></div>
-
-    <div class="layui-row layui-col-space20">
+    <div class="layui-row">
         <div class="layui-col-md8">
             <div class="carousel">
                 <div class="layui-carousel" id="images-carousel">
                     <!--          轮播图-->
                     <div carousel-item>
                         <div>
-                            <a ><img lay-src="/images/1.jpeg" width="100%" height="280px;"/></a>
+                            <a ><img lay-src="/images/1.jpg" width="100%" height="280px;"/></a>
                         </div>
                         <div>
-                            <img lay-src="/images/2.jpeg" width="100%" height="280px;"/>
+                            <img lay-src="/images/2.jpg" width="100%" height="280px;"/>
                         </div>
                         <div>
                             <img lay-src="/images/3.jpg" width="100%" height="280px;"/>
@@ -59,6 +58,38 @@
 
                 </div>
             </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="ad"><img lay-src="/images/adone.jpg"></div>
+            <div class="ad"><img lay-src="/images/adtow.jpg"></div>
+            <div class="ad"><img lay-src="/images/adthree.jpg"></div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space20">
+        <div class="layui-col-md8">
+<!--            <div class="carousel">-->
+<!--                <div class="layui-carousel" id="images-carousel">-->
+<!--                    &lt;!&ndash;          轮播图&ndash;&gt;-->
+<!--                    <div carousel-item>-->
+<!--                        <div>-->
+<!--                            <a ><img lay-src="/images/1.jpg" width="100%" height="280px;"/></a>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <img lay-src="/images/2.jpg" width="100%" height="280px;"/>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <img lay-src="/images/3.jpg" width="100%" height="280px;"/>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <img lay-src="/images/4.jpg" width="100%" height="280px;"/>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <img lay-src="/images/5.jpg" width="100%" height="280px;"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            </div>-->
             <div class="article-main">
                 <h2>
                     新闻推荐
@@ -151,7 +182,7 @@
         </div>
 
         <!--    左边栏-->
-        <div class="layui-col-md4">
+        <div class="layui-col-md4" style="margin-top: 25px">
 
             <form class="layui-form" method="post" action="/article/search">
                 <div class="layui-form-item">
@@ -162,16 +193,17 @@
                 </div>
             </form>
 
-            <div class="ad"><img lay-src="/images/ad.jpg"></div>
+
             <div class="ms-top">
-                <ul class="hd" id="tab">
-                    <li class="cur"><a>点击排行</a></li>
+
+                <ul class="hd" id="tab" style="margin-left: 115px">
+                    <li class="cur"><a>点击排行</a><img src="" alt="" th:src="@{/images/newsbg05.png}" ></li>
                 </ul>
             </div>
             <div class="ms-main" id="ms-main">
                 <div style="display: block;" class="bd bd-news">
                     <ul >
-                        <li th:each="rowlist:${session.rowLists}"><a   href="#" target="_blank" th:text="${rowlist.getTitle()}"
+                        <li th:each="rowlist:${session.rowLists}"><a href="#" target="_blank" th:text="${rowlist.getTitle()}"
                                 th:href="@{/article/details/{id}(id=${rowlist.getId()})}">住在手机里的朋友</a></li>
 
                     </ul>
@@ -179,9 +211,9 @@
 
             </div>
 
-            <div>
+            <div style="background-color: #eee;margin-top: 10px">
                 <div class="bd-news">
-                    <h3 class="per_test">最新新闻</h3>
+                    <span class="per_test">最新新闻</span><img class="new_img" src="" alt="" th:src="@{/images/newsbg06.png}" >
                     <ul  >
                         <li th:each="newList:${session.newLists}"><a  href="#" target="_blank" th:text="${newList.getTitle()}"
                          th:href="@{/article/details/{id}(id=${newList.getId()})}">原来以为，一个人的勇敢是，删掉他的手机号码...</a></li>
@@ -205,8 +237,6 @@
                 </ul>
             </div>
 
-
-            <div class="ad"><img lay-src="/images/03.jpg"></div>
             <div class="links">
                 <h3>友情链接</h3>
 <!--                <h3><span>[<a href="#">申请友情链接</a>]</span>友情链接</h3>-->

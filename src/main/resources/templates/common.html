@@ -12,33 +12,55 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
     <link rel="stylesheet" th:href="@{/layui/css/modules/layer/default/layer.css}"/>
     <link rel="stylesheet" th:href="@{/css/global.css}"/>
+    <style>
+        .layui-nav .layui-nav-item-xg {
+            position: relative;
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+            vertical-align: middle;
+            line-height: 60px
+        }
+
+        .layui-nav .layui-nav-item-xg a {
+            display: block;
+            padding: 0 20px;
+            color: #666;
+            /*color: rgba(160, 156, 156, 0.7);*/
+            transition: all .3s;
+            -webkit-transition: all .3s;
+            font-size: 15px;
+        }
+    </style>
 </head>
 <body>
 <div id="top_start" class="layui-header header">
     <div class="main">
-        <ul class="layui-nav layui-nav-left" lay-filter="filter">
+        <ul class="layui-nav layui-nav-left" lay-filter="filter" id="cate">
             <a class="logo" href="#" title="News">News</a>
             <li class="layui-nav-item nav-left">
                 <a th:href="@{/index}">首页</a>
             </li>
-<!--            <li class="layui-nav-item layui-this">-->
+            <!--            <li class="layui-nav-item layui-this">-->
             <li class="layui-nav-item">
                 <a href="#">新闻</a>
                 <dl class="layui-nav-child">
-                    <dd th:each="categrory:${session.cateList}"><a th:href="@{/cate/CateArticle/{id}(id=${categrory.cid})}"
-                    th:text="${categrory.cname}">娱乐</a></dd>
+                    <dd th:each="categrory:${session.cateList}"><a
+                            th:href="@{/cate/CateArticle/{id}(id=${categrory.cid})}"
+                            th:text="${categrory.cname}">娱乐</a>
+                    </dd>
                 </dl>
             </li>
 
-<!--            <li class="layui-nav-item">-->
-<!--                <a th:href="@{/time_line}">公告</a>-->
-<!--            </li>-->
+            <!--            <li class="layui-nav-item">-->
+            <!--                <a th:href="@{/time_line}">公告</a>-->
+            <!--            </li>-->
             <li class="layui-nav-item" th:if="${session.user ne null && session?.user.lid ge 2} ">
-            <a href="#">其他等级用户新闻</a>
-            <dl class="layui-nav-child">
-                <dd th:if="${session?.user?.lid>1}"><a  th:href="@{/article/other/{lid}(lid=1)}">等级为1</a></dd>
-                <dd th:if="${session?.user?.lid>2}"><a  th:href="@{/article/other/{lid}(lid=2)}">等级为2</a></dd>
-            </dl>
+                <a href="#">其他等级用户新闻</a>
+                <dl class="layui-nav-child">
+                    <dd th:if="${session?.user?.lid>1}"><a th:href="@{/article/other/{lid}(lid=1)}">等级为1</a></dd>
+                    <dd th:if="${session?.user?.lid>2}"><a th:href="@{/article/other/{lid}(lid=2)}">等级为2</a></dd>
+                </dl>
             </li>
         </ul>
 
@@ -50,18 +72,18 @@
                 <a th:href="@{/user/login}">登录</span></a>
             </li>
             <li class="layui-nav-item">
-                <a th:href="@{/back/login}">进入后台系统</a>
+                <a th:href="@{/back/login}">后台系统</a>
             </li>
 
         </ul>
         <ul class="layui-nav layui-layout-right layui-nav-right" lay-filter="filter" th:if="${session.user} ne null">
             <li class="layui-nav-item">
-                <a th:href="@{/back/login}">进入后台系统</a>
+                <a th:href="@{/back/login}">后台系统</a>
             </li>
 
-            <li class="layui-nav-item "  >
-                <a href="javascript:;" ><img th:src="@{${session.user.headImage}}" class="layui-nav-img" >[[${session.user.newsName}]]</a>
-<!--                <a href="javascript:;"><i class="layui-icon" style="font-size: 30px; color: #1E9FFF;" >&#xe66f;</i>[[${session.user.uname}]]</a>-->
+            <li class="layui-nav-item ">
+                <a href="javascript:;"><img th:src="@{${session.user.headImage}}" class="layui-nav-img">[[${session.user.newsName}]]</a>
+                <!--                <a href="javascript:;"><i class="layui-icon" style="font-size: 30px; color: #1E9FFF;" >&#xe66f;</i>[[${session.user.uname}]]</a>-->
                 <dl class="layui-nav-child">
                     <dd><a th:href="@{/user/user_center}">用户中心</a></dd>
                     <dd><a th:href="@{/article_pub}">发布新闻</a></dd>
@@ -73,7 +95,8 @@
 </div>
 
 <!--次级导航-->
-<div id="ci_nav" class="ci-nav">
+<!--<div id="ci_nav" class="ci-nav">-->
+<div id="ci_nav">
     <script>
         $.get("/common/getCategory", {}, function (data) {
             // 导航
@@ -81,25 +104,26 @@
             var lits = '';
             //遍历数组，拼接字符串
             for (var i = 0; i < data.length; i++) {
-                var li = '<a href="/cate/CateArticle/' + data[i].cid + '" class="layui-col-md1 " >' + data[i].cname + '</a>';
-                lits += li;
+                var li = '<li class="layui-nav-item-xg" style="position:fixed;left: ' + (650 + i * 80) + 'px"><a href="/cate/CateArticle/' + data[i].cid + '" >' + data[i].cname + '</a></li>';
+                // lits += li;
+                $("#cate").append(li)
             }
             //将拼接好的字符串，设置到ul中
-            $("#cate").html(lits)
-                // console.log(data)
+
+            // console.log(data)
         })
     </script>
-    <div class="layui-row" id="cate">
-<!--        <a href="" class="layui-col-md1">娱乐</a>-->
-        这里将会填充从数据库查询到分类信息
-    </div>
+    <!--    <div class="layui-row" id="cate">-->
+    <!--        &lt;!&ndash;        <a href="" class="layui-col-md1">娱乐</a>&ndash;&gt;-->
+    <!--        这里将会填充从数据库查询到分类信息-->
+    <!--    </div>-->
 
 </div>
 
 
 <div id="foot_start" class="footer">
     <hr class="layui-bg-red">
-    <p><a href="#">新闻发布网站</a> 2021 &copy; <a href="#">The News Release System </a></p>
+    <p><a href="#">博闻新闻管理系统</a> 2023 &copy; <a href="#">Bowen News Management System </a></p>
     <p></p>
     <div></div>
 </div>

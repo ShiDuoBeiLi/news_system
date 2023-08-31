@@ -58,16 +58,6 @@
                 </div>
             </div>
 
-            <div class="layui-inline">
-                <label class="layui-form-label">激活状态:</label>
-                <div class="layui-input-block">
-                    <select name="active">
-                        <option value="">请选择用户状态</option>
-                        <option value="1">激活</option>
-                        <option value="0">未激活</option>
-                    </select>
-                </div>
-            </div>
             <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
         </form>
     </div>
@@ -87,7 +77,6 @@
         <th>用户等级</th>
         <th>电话</th>
         <th>邮箱</th>
-        <th>激活状态</th>
         <th>创建日期</th>
         <th th:if="${session.back_user.lid} eq '3'">操作</th>
         </thead>
@@ -100,7 +89,6 @@
             <td th:text="${users.lid}">用户等级</td>
             <td th:text="${users.telephone}">电话</td>
             <td th:text="${users.email}">邮箱</td>
-            <td th:text="${users.active==0?'未激活':'激活'}">激活状态</td>
             <td th:text="${#dates.format(users.createTime, 'yyyy-MM-dd HH:mm')}">创建日期</td>
             <td th:if="${session.back_user.lid} eq '3'">
                 <a class="layui-btn layui-btn-xs" th:onclick="x_admin_show('用户编辑','/back/user/editUser?uid=[[${users.uid}]]',500,525)">编辑</a>

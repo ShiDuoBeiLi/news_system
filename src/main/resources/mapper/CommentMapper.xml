@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.wxm.news_demo.mapper.CommentMapper">
+<mapper namespace="cn.lyl.news_system.mapper.CommentMapper">
 
     <resultMap id="rm1" type="comment">
         <id property="comid" column="comid"/>

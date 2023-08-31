@@ -3,7 +3,7 @@
     {
       "name": "spring.datasource",
       "type": "javax.sql.DataSource",
-      "sourceType": "cn.wxm.news_demo.config.DruidConfig",
+      "sourceType": "cn.lyl.news_system.config.DruidConfig",
       "sourceMethod": "druidDataSource()"
     }
   ],

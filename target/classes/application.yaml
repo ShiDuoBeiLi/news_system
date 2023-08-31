@@ -1,3 +1,7 @@
+server:
+  port: 9999
+  resources:
+    static-locations: classpath:/static/
 #  查看执行的sql文件
 #mybatis-plus:
 #  configuration:
@@ -8,13 +12,18 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #    别名扫描包
-  type-aliases-package: cn.wxm.news_demo.domain
+  type-aliases-package: cn.lyl.news_system.domain
 
 #  映射文件路径，resources下的mapper，也可以不用配置，默认就是classpath*:/mapper/**/*.xml
   mapper-locations: classpath*:/mapper/**/*.xml
-
 spring:
+
   datasource:
+    url: jdbc:mysql://127.0.0.1:3306/news_demo?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
     #Spring Boot 默认是不注入这些属性值的，需要自己绑定
     #druid 数据源专有配置
     initialSize: 5
@@ -36,4 +45,13 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    servlet:
+      multipart:
+        max-file-size: 10MB
+        max-request-size: 100MB
+    thymeleaf:
+      cache: true
+    devtools:
+      restart:
+        enabled: true
 
