@@ -43,6 +43,10 @@
 
 ![新闻发布页](https://raw.githubusercontent.com/ShiDuoBeiLi/news_system/master/newsImg/public.png)
 
+后台可视化界面：
+
+![后台可视化界面](https://github.com/ShiDuoBeiLi/news_system/blob/master/newsImg/echarts.png)
+
 后台首页：
 
 ![后台首页](https://raw.githubusercontent.com/ShiDuoBeiLi/news_system/master/newsImg/admin.png)
